@@ -21,3 +21,21 @@ function SH_SMS.ManaRegen(ply)
         end
     end)
 end
+
+hook.Add("KeyPress", "ManaUse", function( ply, key)
+    if ply.Cooldown == nil then ply.Cooldown = CurTime() end
+    if ply.Cooldown <= CurTime() then
+        ply.Cooldown = CurTime() + 0.1
+		if key == IN_ATTACK || key == IN_ATTACK2 then
+			if ply:Alive() && ply:GetActiveWeapon() then
+				if table.HasValue(SMS_Config.MagieWeapon, ply:GetActiveWeapon():GetClass() ) then
+                    for i=2, #SMS_Config.MagieTable[ply.MagicData["SMS_Magie_Number"]] do
+						if ply:GetActiveWeapon():GetClass() == SMS_Config.MagieTable[ply.MagicData["SMS_Magie_Number"]][i][1] then
+                            SMS_Main.Energyuse(ply, SMS_Config.MagieTable[ply.MagicData["SMS_Magie_Number"]][i][2])
+						end
+					end                    
+                end
+            end
+		end
+	end
+end)

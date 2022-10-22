@@ -11,6 +11,10 @@ end
 function SH_SMS.PlayerSpawn( ply )
     if not ply.SMSData then SH_SMS.InitializeData(ply) end
 
+    ply.Mana = ply.Mana or SH_SMS.SMSData["Mana"]
+    SH_SMS.ManaRegen(ply)
+    SH_SMS.UpMana(ply)
+    
     timer.Simple(0.5, function()
         SH_SMS.PlayerSwepGive(ply)
     end)

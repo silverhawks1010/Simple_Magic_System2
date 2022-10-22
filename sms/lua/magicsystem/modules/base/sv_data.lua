@@ -32,5 +32,18 @@ function SH_SMS.SaveData(ply)
     net.Send(ply)
 end
 
+function SH_SMS.InitializeSpells()
+    if not file.Exists("magicsystem/spell.txt", "DATA") then
+        local SH_SMS.SpellData = {}
+        File.Write("magicsystem/spell.txt", util.TableToJSON(SH_SMS.SpellData))
+    else
+        SH_SMS.SellData = util.JSONToTable(file.Read("magicsystem/spell.txt", "DATA"))
+    end
+end
+
+function SH_SMS.SaveSpells()
+    File.Write("magicsystem/spell.txt", util.TableToJSON(SH_SMS.SpellData))
+end
+
 
 print("[SMS] Data has been loaded")
