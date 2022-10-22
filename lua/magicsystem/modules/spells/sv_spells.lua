@@ -12,6 +12,12 @@ function SH_SMS.RollPower()
 end
 
 function SH_SMS.CreatePower(id, name, rarity, active)
+    if !(SH_SMS.SellData[id] == nil) then return end
+
+    local pattern = '[\\/:%*%?"<>|] ' -- a set of all restricted characters
+    local start = string.find( id, pattern )
+    if start ~= nil then return end
+
     SH_SMS.SellData[id] = {
         name = name,
         rarity = rarity,
@@ -26,11 +32,25 @@ function SH_SMS.EditPower(powerid, key, newvalue)
     SH_SMS.SaveSpells()
 end
 
+function SH_SMS.GetAllMagicID()
+    local magicid = {}
+    for k,v in pairs(SH_SMS.SellData) do
+        table.insert(magicid, k)
+    end
+    return magicid
+end
+
 --[[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------Spell Gestion-----------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]--
 
 function SH_SMS.CreateSpell(powerid, id, name, weapon, rmana, cmana)
+    if !(SH_SMS.SellData[id] == nil) then return end
+
+    local pattern = '[\\/:%*%?"<>|] ' -- a set of all restricted characters
+    local start = string.find( id, pattern )
+    if start ~= nil then return end
+
     SH_SMS.SpellData[powerid]["Spells"][id] = {
         name = name,
         weapon = weapon,
